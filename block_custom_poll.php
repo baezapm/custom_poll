@@ -43,7 +43,7 @@ class block_custom_poll extends block_base {
             "SELECT o.id as optionid, q.id AS question_id, q.question, o.option_name, o.vote_count, q.active
          FROM {custom_poll_questions} q
          LEFT JOIN {custom_poll_options} o ON q.id = o.question_id
-         WHERE q.active = 1"
+         WHERE q.active = 1 ORDER BY o.id"
         );
 
         if ($pollData) {
