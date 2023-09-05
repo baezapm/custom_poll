@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/custom_poll/db" VERSION="2022090300" COMMENT="XMLDB file for Moodle block custom_poll" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+    <TABLES>
+        <TABLE NAME="custom_poll_questions" COMMENT="Table to store poll questions">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" COMMENT="Unique identifier"/>
+                <FIELD NAME="question" TYPE="text" NOTNULL="true" COMMENT="Poll question"/>
+                <FIELD NAME="active" LENGTH="10" TYPE="int" COMMENT="Poll question"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+        </TABLE>
+
+        <TABLE NAME="custom_poll_options" COMMENT="Table to store poll options">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" COMMENT="Unique identifier"/>
+                <FIELD NAME="question_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" COMMENT="Foreign key to poll question"/>
+                <FIELD NAME="option_name" TYPE="text" NOTNULL="true" COMMENT="Poll option response"/>
+                <FIELD NAME="vote_count" LENGTH="10" TYPE="int" DEFAULT="0" COMMENT="Poll option response"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="question_id" TYPE="foreign" FIELDS="question_id" REFTABLE="custom_poll_questions" REFFIELDS="id"/>
+            </KEYS>
+        </TABLE>
+
+        <TABLE NAME="custom_poll_votes" COMMENT="Table to store user votes">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" COMMENT="Unique identifier"/>
+                <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" COMMENT="User who voted"/>
+                <FIELD NAME="question_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" COMMENT="Question id"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+                <KEY NAME="user_id" TYPE="foreign" FIELDS="user_id" REFTABLE="user" REFFIELDS="id"/>
+                <KEY NAME="question_id" TYPE="foreign" FIELDS="question_id" REFTABLE="custom_poll_questions" REFFIELDS="id"/>
+            </KEYS>
+        </TABLE>
+    </TABLES>
+</XMLDB>
